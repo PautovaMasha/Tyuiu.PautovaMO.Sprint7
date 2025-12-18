@@ -112,38 +112,6 @@
 
             // ==================== 3. ПОИСК ====================
 
-            // Поиск по фамилии
-            public List<Employee> SearchByLastName(List<Employee> employeesList, string lastName)
-            {
-                List<Employee> result = new List<Employee>();
-
-                foreach (Employee emp in employeesList)
-                {
-                    if (emp.LastName.ToLower().Contains(lastName.ToLower()))
-                    {
-                        result.Add(emp);
-                    }
-                }
-
-                return result;
-            }
-
-            // Поиск по должности
-            public List<Employee> SearchByPosition(List<Employee> employeesList, string position)
-            {
-                List<Employee> result = new List<Employee>();
-
-                foreach (Employee emp in employeesList)
-                {
-                    if (emp.Position.ToLower().Contains(position.ToLower()))
-                    {
-                        result.Add(emp);
-                    }
-                }
-
-                return result;
-            }
-
             // Общий поиск (по всем полям)
             public List<Employee> SearchAll(List<Employee> employeesList, string searchText)
             {
@@ -276,21 +244,6 @@
                 return employees;
             }
 
-            // Получить уникальные должности
-            public List<string> GetUniquePositions()
-            {
-                List<string> positions = new List<string>();
-
-                foreach (Employee emp in employees)
-                {
-                    if (!positions.Contains(emp.Position))
-                    {
-                        positions.Add(emp.Position);
-                    }
-                }
-
-                return positions;
-            }
 
             // ==================== 7. ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ====================
 
