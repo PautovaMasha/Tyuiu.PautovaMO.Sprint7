@@ -232,17 +232,7 @@
                 return employees.Remove(employee);
             }
 
-            // Очистить весь список
-            public void ClearAll()
-            {
-                employees.Clear();
-            }
-
-            // Получить всех сотрудников
-            public List<Employee> GetAllEmployees()
-            {
-                return employees;
-            }
+            
 
 
             // ==================== 7. ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ====================
