@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel_PMO = new Panel();
             groupBoxInfo_PMO = new GroupBox();
             buttonAbout_PMO = new Button();
@@ -56,6 +60,10 @@
             buttonSearch_PMO = new Button();
             splitter_PMO = new Splitter();
             dataGridViewEmployees_PMO = new DataGridView();
+            chartEmployees_PMO = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            openFileDialog_PMO = new OpenFileDialog();
+            saveFileDialog_PMO = new SaveFileDialog();
+            toolTip_PMO = new ToolTip(components);
             panel_PMO.SuspendLayout();
             groupBoxInfo_PMO.SuspendLayout();
             groupBoxTabl_PMO.SuspendLayout();
@@ -63,20 +71,21 @@
             groupBoxFile_PMO.SuspendLayout();
             groupBoxSearch_PMO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chartEmployees_PMO).BeginInit();
             SuspendLayout();
             // 
             // panel_PMO
             // 
-            panel_PMO.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel_PMO.Controls.Add(groupBoxInfo_PMO);
             panel_PMO.Controls.Add(groupBoxTabl_PMO);
             panel_PMO.Controls.Add(groupBoxAdd_PMO);
             panel_PMO.Controls.Add(groupBoxFile_PMO);
             panel_PMO.Controls.Add(groupBoxSearch_PMO);
             panel_PMO.Controls.Add(splitter_PMO);
+            panel_PMO.Dock = DockStyle.Left;
             panel_PMO.Location = new Point(0, 0);
             panel_PMO.Name = "panel_PMO";
-            panel_PMO.Size = new Size(331, 460);
+            panel_PMO.Size = new Size(331, 514);
             panel_PMO.TabIndex = 0;
             // 
             // groupBoxInfo_PMO
@@ -120,7 +129,7 @@
             groupBoxTabl_PMO.Controls.Add(buttonDelete_PMO);
             groupBoxTabl_PMO.Location = new Point(3, 295);
             groupBoxTabl_PMO.Name = "groupBoxTabl_PMO";
-            groupBoxTabl_PMO.Size = new Size(325, 87);
+            groupBoxTabl_PMO.Size = new Size(325, 141);
             groupBoxTabl_PMO.TabIndex = 11;
             groupBoxTabl_PMO.TabStop = false;
             groupBoxTabl_PMO.Text = "Работа с таблицей";
@@ -163,7 +172,7 @@
             groupBoxAdd_PMO.Controls.Add(buttonAdd_PMO);
             groupBoxAdd_PMO.Location = new Point(3, 125);
             groupBoxAdd_PMO.Name = "groupBoxAdd_PMO";
-            groupBoxAdd_PMO.Size = new Size(325, 193);
+            groupBoxAdd_PMO.Size = new Size(325, 247);
             groupBoxAdd_PMO.TabIndex = 2;
             groupBoxAdd_PMO.TabStop = false;
             groupBoxAdd_PMO.Text = "Добавление сотрудника";
@@ -337,25 +346,53 @@
             splitter_PMO.Dock = DockStyle.Right;
             splitter_PMO.Location = new Point(328, 0);
             splitter_PMO.Name = "splitter_PMO";
-            splitter_PMO.Size = new Size(3, 460);
+            splitter_PMO.Size = new Size(3, 514);
             splitter_PMO.TabIndex = 1;
             splitter_PMO.TabStop = false;
             // 
             // dataGridViewEmployees_PMO
             // 
-            dataGridViewEmployees_PMO.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewEmployees_PMO.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewEmployees_PMO.Dock = DockStyle.Fill;
             dataGridViewEmployees_PMO.Location = new Point(331, 0);
             dataGridViewEmployees_PMO.Name = "dataGridViewEmployees_PMO";
-            dataGridViewEmployees_PMO.Size = new Size(460, 456);
+            dataGridViewEmployees_PMO.Size = new Size(541, 514);
             dataGridViewEmployees_PMO.TabIndex = 1;
             dataGridViewEmployees_PMO.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // chartEmployees_PMO
+            // 
+            chartEmployees_PMO.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            chartEmployees_PMO.BorderlineColor = Color.Gray;
+            chartArea1.AxisX.Title = "Должность";
+            chartArea1.AxisY.Title = "Количество";
+            chartArea1.Name = "Chart_PMO";
+            chartEmployees_PMO.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chartEmployees_PMO.Legends.Add(legend1);
+            chartEmployees_PMO.Location = new Point(462, 324);
+            chartEmployees_PMO.Name = "chartEmployees_PMO";
+            chartEmployees_PMO.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            series1.ChartArea = "Chart_PMO";
+            series1.Color = Color.FromArgb(255, 128, 128);
+            series1.IsValueShownAsLabel = true;
+            series1.LabelFormat = "0";
+            series1.Legend = "Legend1";
+            series1.Name = "Количество работников";
+            chartEmployees_PMO.Series.Add(series1);
+            chartEmployees_PMO.Size = new Size(410, 190);
+            chartEmployees_PMO.TabIndex = 2;
+            // 
+            // openFileDialog_PMO
+            // 
+            openFileDialog_PMO.FileName = "openFileDialog1";
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(792, 456);
+            ClientSize = new Size(872, 514);
+            Controls.Add(chartEmployees_PMO);
             Controls.Add(dataGridViewEmployees_PMO);
             Controls.Add(panel_PMO);
             Name = "FormMain";
@@ -371,6 +408,7 @@
             groupBoxSearch_PMO.ResumeLayout(false);
             groupBoxSearch_PMO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chartEmployees_PMO).EndInit();
             ResumeLayout(false);
         }
 
@@ -403,5 +441,9 @@
         private GroupBox groupBoxInfo_PMO;
         private Button buttonAbout_PMO;
         private Button buttonGuide_PMO;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartEmployees_PMO;
+        private OpenFileDialog openFileDialog_PMO;
+        private SaveFileDialog saveFileDialog_PMO;
+        private ToolTip toolTip_PMO;
     }
 }

@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="winforms.datavisualization" Version="1.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tyuiu.PautovaMO.Sprint7.Project.V11.Lib\Tyuiu.PautovaMO.Sprint7.Project.V11.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="FormMain.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
