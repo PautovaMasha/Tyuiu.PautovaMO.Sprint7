@@ -106,7 +106,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                 );
             }
         }
-        
+
 
 
         private void buttonResetSearch_PMO_Click(object sender, EventArgs e)
@@ -128,7 +128,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                 );
             }
         }
-        
+
         private void buttonDelete_PMO_Click(object sender, EventArgs e)
         {
 
@@ -153,11 +153,11 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             try
             {
                 // Находим сотрудника в списке
-                Employee employeeToDelete = currentEmployees_PMO.FirstOrDefault(emp =>emp.LastName == lastName && emp.FirstName == firstName);
+                Employee employeeToDelete = currentEmployees_PMO.FirstOrDefault(emp => emp.LastName == lastName && emp.FirstName == firstName);
 
                 if (employeeToDelete != null)
                 {
- 
+
                     bool isDeleted = ds.RemoveEmployee(employeeToDelete);
 
                     if (isDeleted)
@@ -179,7 +179,59 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         private void buttonAdd_PMO_Click(object sender, EventArgs e)
         {
-            ;
+            // Проверяем заполнение
+            if (textBoxFamiliaInput_PMO.Text == "" || textBoxNameInput_PMO.Text == "")
+            {
+                MessageBox.Show("Заполните фамилию и имя");
+                return;
+            }
+
+            try
+            {
+                // Создаем сотрудника
+                Employee emp = new Employee
+                {
+                    LastName = textBoxFamiliaInput_PMO.Text,
+                    FirstName = textBoxNameInput_PMO.Text,
+                    Position = textBoxPostInput_PMO.Text,
+                    Salary = decimal.Parse(textBoxSalaryInput_PMO.Text),
+                    Experience = int.Parse(textBoxStazhInput_PMO.Text)
+                };
+
+                // Добавляем
+                DataService ds = new DataService();
+                ds.AddEmployee(emp);
+
+                // Добавляем в таблицу
+                dataGridViewEmployees_PMO.Rows.Add(
+                    emp.LastName,
+                    emp.FirstName,
+                    emp.Position,
+                    emp.Salary.ToString("N2"),
+                    emp.Experience
+                );
+
+                // Очищаем поля
+                textBoxFamiliaInput_PMO.Clear();
+                textBoxNameInput_PMO.Clear();
+                textBoxPostInput_PMO.Clear();
+                textBoxSalaryInput_PMO.Clear();
+                textBoxStazhInput_PMO.Clear();
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте правильность ввода данных");
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "CSV файлы (*.csv)|*.csv";
+            saveDialog.FileName = "сотрудники_обновленные.csv";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                ds.SaveToCSV(saveDialog.FileName, currentEmployees_PMO);
+                MessageBox.Show("Сотрудник добавлен и данные сохранены!");
+            }
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -202,9 +254,9 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         }
 
-        
 
-        
+
+
 
 
 
@@ -212,7 +264,31 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         private void buttonSaveFile_PMO_Click(object sender, EventArgs e)
         {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "CSV файлы (*.csv)|*.csv";
+            saveDialog.FileName = "сотрудники_обновленные.csv";
+            saveDialog.Title = "Сохранить данные сотрудников";
 
+            // 2. Предлагаем сохранить на рабочий стол по умолчанию
+            saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            // 3. Показываем диалог
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // 4. Передаем ВЫБРАННЫЙ пользователем путь
+                    ds.SaveToCSV(saveDialog.FileName, currentEmployees_PMO);
+
+                    MessageBox.Show($"Файл сохранен:\n{saveDialog.FileName}",
+                        "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка сохранения: {ex.Message}",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void buttonStatic_PMO_Click(object sender, EventArgs e)
@@ -249,6 +325,9 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         }
 
-        
+        private void buttonDoneFilter_PMO_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -62,6 +62,9 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             openFileDialog_PMO = new OpenFileDialog();
             saveFileDialog_PMO = new SaveFileDialog();
             toolTip_PMO = new ToolTip(components);
+            comboBoxFilter_PMO = new ComboBox();
+            groupBoxFilter_PMO = new GroupBox();
+            buttonDoneFilter_PMO = new Button();
             panel_PMO.SuspendLayout();
             groupBoxInfo_PMO.SuspendLayout();
             groupBoxTabl_PMO.SuspendLayout();
@@ -69,10 +72,12 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             groupBoxFile_PMO.SuspendLayout();
             groupBoxSearch_PMO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).BeginInit();
+            groupBoxFilter_PMO.SuspendLayout();
             SuspendLayout();
             // 
             // panel_PMO
             // 
+            panel_PMO.Controls.Add(groupBoxFilter_PMO);
             panel_PMO.Controls.Add(groupBoxInfo_PMO);
             panel_PMO.Controls.Add(groupBoxTabl_PMO);
             panel_PMO.Controls.Add(groupBoxAdd_PMO);
@@ -373,6 +378,35 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             openFileDialog_PMO.FileName = "openFileDialog1";
             // 
+            // comboBoxFilter_PMO
+            // 
+            comboBoxFilter_PMO.FormattingEnabled = true;
+            comboBoxFilter_PMO.Items.AddRange(new object[] { "по зарплате ", "по стажу", "по должности" });
+            comboBoxFilter_PMO.Location = new Point(9, 21);
+            comboBoxFilter_PMO.Name = "comboBoxFilter_PMO";
+            comboBoxFilter_PMO.Size = new Size(136, 23);
+            comboBoxFilter_PMO.TabIndex = 12;
+            // 
+            // groupBoxFilter_PMO
+            // 
+            groupBoxFilter_PMO.Controls.Add(buttonDoneFilter_PMO);
+            groupBoxFilter_PMO.Controls.Add(comboBoxFilter_PMO);
+            groupBoxFilter_PMO.Location = new Point(3, 458);
+            groupBoxFilter_PMO.Name = "groupBoxFilter_PMO";
+            groupBoxFilter_PMO.Size = new Size(325, 56);
+            groupBoxFilter_PMO.TabIndex = 13;
+            groupBoxFilter_PMO.TabStop = false;
+            groupBoxFilter_PMO.Text = "Фильтр таблицы";
+            // 
+            // buttonDoneFilter_PMO
+            // 
+            buttonDoneFilter_PMO.Location = new Point(160, 21);
+            buttonDoneFilter_PMO.Name = "buttonDoneFilter_PMO";
+            buttonDoneFilter_PMO.Size = new Size(72, 23);
+            buttonDoneFilter_PMO.TabIndex = 13;
+            buttonDoneFilter_PMO.UseVisualStyleBackColor = true;
+            buttonDoneFilter_PMO.Click += buttonDoneFilter_PMO_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -393,10 +427,11 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             groupBoxSearch_PMO.ResumeLayout(false);
             groupBoxSearch_PMO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).EndInit();
+            groupBoxFilter_PMO.ResumeLayout(false);
             ResumeLayout(false);
         }
 
-        
+
 
         #endregion
 
@@ -431,5 +466,8 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         private ToolTip toolTip_PMO;
         private Button buttonResetSearch_PMO;
         private TextBox textBoxSearch_PMO;
+        private GroupBox groupBoxFilter_PMO;
+        private ComboBox comboBoxFilter_PMO;
+        private Button buttonDoneFilter_PMO;
     }
 }

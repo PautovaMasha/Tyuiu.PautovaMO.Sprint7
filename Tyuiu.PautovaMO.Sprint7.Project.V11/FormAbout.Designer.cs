@@ -79,7 +79,7 @@
             MinimumSize = new Size(417, 225);
             Name = "FormAbout_PMO";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "О программе";
+            Text = "Справка";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
