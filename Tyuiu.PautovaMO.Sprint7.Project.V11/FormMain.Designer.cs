@@ -1,4 +1,5 @@
-﻿namespace Tyuiu.PautovaMO.Sprint7.Project.V11
+﻿
+namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 {
     partial class FormMain
     {
@@ -30,9 +31,6 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel_PMO = new Panel();
             groupBoxInfo_PMO = new GroupBox();
             buttonAbout_PMO = new Button();
@@ -57,10 +55,10 @@
             buttonSaveFile_PMO = new Button();
             groupBoxSearch_PMO = new GroupBox();
             textBoxSearch_PMO = new TextBox();
+            buttonResetSearch_PMO = new Button();
             buttonSearch_PMO = new Button();
             splitter_PMO = new Splitter();
             dataGridViewEmployees_PMO = new DataGridView();
-            chartEmployees_PMO = new System.Windows.Forms.DataVisualization.Charting.Chart();
             openFileDialog_PMO = new OpenFileDialog();
             saveFileDialog_PMO = new SaveFileDialog();
             toolTip_PMO = new ToolTip(components);
@@ -71,7 +69,6 @@
             groupBoxFile_PMO.SuspendLayout();
             groupBoxSearch_PMO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)chartEmployees_PMO).BeginInit();
             SuspendLayout();
             // 
             // panel_PMO
@@ -315,6 +312,7 @@
             // groupBoxSearch_PMO
             // 
             groupBoxSearch_PMO.Controls.Add(textBoxSearch_PMO);
+            groupBoxSearch_PMO.Controls.Add(buttonResetSearch_PMO);
             groupBoxSearch_PMO.Controls.Add(buttonSearch_PMO);
             groupBoxSearch_PMO.Location = new Point(3, 0);
             groupBoxSearch_PMO.Name = "groupBoxSearch_PMO";
@@ -327,14 +325,25 @@
             // 
             textBoxSearch_PMO.Location = new Point(6, 19);
             textBoxSearch_PMO.Name = "textBoxSearch_PMO";
-            textBoxSearch_PMO.Size = new Size(272, 23);
+            textBoxSearch_PMO.Size = new Size(226, 23);
             textBoxSearch_PMO.TabIndex = 9;
+            // 
+            // buttonResetSearch_PMO
+            // 
+            buttonResetSearch_PMO.BackColor = SystemColors.GradientInactiveCaption;
+            buttonResetSearch_PMO.Image = (Image)resources.GetObject("buttonResetSearch_PMO.Image");
+            buttonResetSearch_PMO.Location = new Point(282, 12);
+            buttonResetSearch_PMO.Name = "buttonResetSearch_PMO";
+            buttonResetSearch_PMO.Size = new Size(38, 35);
+            buttonResetSearch_PMO.TabIndex = 5;
+            buttonResetSearch_PMO.UseVisualStyleBackColor = false;
+            buttonResetSearch_PMO.Click += buttonResetSearch_PMO_Click;
             // 
             // buttonSearch_PMO
             // 
             buttonSearch_PMO.BackColor = SystemColors.GradientInactiveCaption;
             buttonSearch_PMO.Image = (Image)resources.GetObject("buttonSearch_PMO.Image");
-            buttonSearch_PMO.Location = new Point(284, 12);
+            buttonSearch_PMO.Location = new Point(238, 12);
             buttonSearch_PMO.Name = "buttonSearch_PMO";
             buttonSearch_PMO.Size = new Size(38, 35);
             buttonSearch_PMO.TabIndex = 5;
@@ -360,29 +369,6 @@
             dataGridViewEmployees_PMO.TabIndex = 1;
             dataGridViewEmployees_PMO.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // chartEmployees_PMO
-            // 
-            chartEmployees_PMO.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            chartEmployees_PMO.BorderlineColor = Color.Gray;
-            chartArea1.AxisX.Title = "Должность";
-            chartArea1.AxisY.Title = "Количество";
-            chartArea1.Name = "Chart_PMO";
-            chartEmployees_PMO.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            chartEmployees_PMO.Legends.Add(legend1);
-            chartEmployees_PMO.Location = new Point(462, 324);
-            chartEmployees_PMO.Name = "chartEmployees_PMO";
-            chartEmployees_PMO.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series1.ChartArea = "Chart_PMO";
-            series1.Color = Color.FromArgb(255, 128, 128);
-            series1.IsValueShownAsLabel = true;
-            series1.LabelFormat = "0";
-            series1.Legend = "Legend1";
-            series1.Name = "Количество работников";
-            chartEmployees_PMO.Series.Add(series1);
-            chartEmployees_PMO.Size = new Size(410, 190);
-            chartEmployees_PMO.TabIndex = 2;
-            // 
             // openFileDialog_PMO
             // 
             openFileDialog_PMO.FileName = "openFileDialog1";
@@ -392,7 +378,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(872, 514);
-            Controls.Add(chartEmployees_PMO);
             Controls.Add(dataGridViewEmployees_PMO);
             Controls.Add(panel_PMO);
             Name = "FormMain";
@@ -408,9 +393,10 @@
             groupBoxSearch_PMO.ResumeLayout(false);
             groupBoxSearch_PMO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).EndInit();
-            ((System.ComponentModel.ISupportInitialize)chartEmployees_PMO).EndInit();
             ResumeLayout(false);
         }
+
+        
 
         #endregion
 
@@ -424,7 +410,6 @@
         private Button buttonSaveFile_PMO;
         private Button buttonDelete_PMO;
         private GroupBox groupBoxSearch_PMO;
-        private TextBox textBoxSearch_PMO;
         private GroupBox groupBoxFile_PMO;
         private GroupBox groupBoxAdd_PMO;
         private TextBox textBoxFamilia_PMO;
@@ -441,9 +426,10 @@
         private GroupBox groupBoxInfo_PMO;
         private Button buttonAbout_PMO;
         private Button buttonGuide_PMO;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartEmployees_PMO;
         private OpenFileDialog openFileDialog_PMO;
         private SaveFileDialog saveFileDialog_PMO;
         private ToolTip toolTip_PMO;
+        private Button buttonResetSearch_PMO;
+        private TextBox textBoxSearch_PMO;
     }
 }

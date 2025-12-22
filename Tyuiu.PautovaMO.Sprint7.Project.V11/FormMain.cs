@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Tyuiu.PautovaMO.Sprint7.Project.V11.Lib;
 namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 {
@@ -57,7 +58,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
                     //buttonFilter_PMO.Enabled = true;
                     buttonAdd_PMO.Enabled = true;
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -68,7 +69,118 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         }
 
 
+        private void buttonSearch_PMO_Click(object sender, EventArgs e)
+        {
+            string searchText = textBoxSearch_PMO.Text.Trim();
 
+            // ВСЕГДА начинаем с очистки таблицы
+            dataGridViewEmployees_PMO.Rows.Clear();
+
+            List<Employee> employeesToShow;
+
+            if (string.IsNullOrEmpty(searchText)) //?????
+            {
+                // Показываем всех
+                employeesToShow = currentEmployees_PMO;
+                this.Text = "Отдел кадров - Все сотрудники";
+            }
+            else
+            {
+                // Показываем найденных
+                employeesToShow = ds.SearchAll(currentEmployees_PMO, searchText);
+                this.Text = $"Отдел кадров - Найдено: {employeesToShow.Count}";
+
+                if (employeesToShow.Count == 0)
+                    MessageBox.Show("Ничего не найдено");
+            }
+
+            // Заполняем dataGridViewEmployees_PMO
+            foreach (Employee emp in employeesToShow)
+            {
+                dataGridViewEmployees_PMO.Rows.Add(
+                    emp.LastName,
+                    emp.FirstName,
+                    emp.Position,
+                    emp.Salary.ToString("N2"),
+                    emp.Experience
+                );
+            }
+        }
+        
+
+
+        private void buttonResetSearch_PMO_Click(object sender, EventArgs e)
+        {
+            // Очищаем поле поиска
+            textBoxSearch_PMO.Clear();
+
+            // Очищаем таблицу и показываем ВСЕХ
+            dataGridViewEmployees_PMO.Rows.Clear();
+
+            foreach (Employee emp in currentEmployees_PMO)
+            {
+                dataGridViewEmployees_PMO.Rows.Add(
+                    emp.LastName,
+                    emp.FirstName,
+                    emp.Position,
+                    emp.Salary.ToString("N2"),
+                    emp.Experience.ToString()
+                );
+            }
+        }
+        
+        private void buttonDelete_PMO_Click(object sender, EventArgs e)
+        {
+
+            if (dataGridViewEmployees_PMO.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            // Получаем выбранную строку
+            DataGridViewRow selectedRow = dataGridViewEmployees_PMO.SelectedRows[0];
+            int rowIndex = selectedRow.Index;
+
+            // Получаем данные из таблицы
+            string lastName = selectedRow.Cells[0].Value?.ToString() ?? "";
+            string firstName = selectedRow.Cells[1].Value?.ToString() ?? "";
+
+            if (string.IsNullOrEmpty(lastName))
+            {
+                return;
+            }
+
+            try
+            {
+                // Находим сотрудника в списке
+                Employee employeeToDelete = currentEmployees_PMO.FirstOrDefault(emp =>emp.LastName == lastName && emp.FirstName == firstName);
+
+                if (employeeToDelete != null)
+                {
+ 
+                    bool isDeleted = ds.RemoveEmployee(employeeToDelete);
+
+                    if (isDeleted)
+                    {
+                        // Удаляем из текущего списка
+                        currentEmployees_PMO.Remove(employeeToDelete);
+
+                        // Удаляем строку из таблицы
+                        dataGridViewEmployees_PMO.Rows.RemoveAt(rowIndex);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+        private void buttonAdd_PMO_Click(object sender, EventArgs e)
+        {
+            ;
+        }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -90,22 +202,13 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         }
 
-        private void buttonAdd_PMO_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonDelete_PMO_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonSearch_PMO_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         
+
+
+
+
 
         private void buttonSaveFile_PMO_Click(object sender, EventArgs e)
         {
@@ -121,11 +224,11 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                 return;
             }
 
-            
+
             var stats = ds.GetStatistics(currentEmployees_PMO);
 
-            
-            FormStatistics formStats = new FormStatistics(stats);
+
+            FormStatistics formStats = new FormStatistics(stats, currentEmployees_PMO);
             formStats.ShowDialog();
         }
 
@@ -145,5 +248,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         {
 
         }
+
+        
     }
 }
