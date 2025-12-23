@@ -197,8 +197,8 @@
 
         // ==================== 6. РАБОТА СО СПИСКОМ ====================
 
-        // Добавить сотрудника
-        public void AddEmployee(Employee employee)
+            // Добавить сотрудника
+            public void AddEmployee(Employee employee)
             {
                 employees.Add(employee);
             }
@@ -220,20 +220,7 @@
                 return File.Exists(filePath);
             }
 
-            // Создание тестового файла
-            public void CreateTestFile(string filePath)
-            {
-                List<Employee> testEmployees = new List<Employee>
-            {
-                new Employee { LastName = "Иванов", FirstName = "Иван", Position = "Директор", Salary = 100000, Experience = 10 },
-                new Employee { LastName = "Петрова", FirstName = "Мария", Position = "Бухгалтер", Salary = 70000, Experience = 5 },
-                new Employee { LastName = "Сидоров", FirstName = "Алексей", Position = "Менеджер", Salary = 60000, Experience = 3 },
-                new Employee { LastName = "Кузнецова", FirstName = "Елена", Position = "Программист", Salary = 90000, Experience = 4 }
-            };
-
-                SaveToCSV(filePath, testEmployees);
-            }
-
+            
             // Проверка данных сотрудника
             public bool ValidateEmployee(Employee employee)
             {

@@ -11,6 +11,15 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             InitializeComponent();
             openFileDialog_PMO.Filter = "Значения, разделённые запятыми(*.csv)|*.csv|Все файлы(*.*)|*.*";
             saveFileDialog_PMO.Filter = "Значения, разделённые запятыми(*.csv)|*.csv|Все файлы(*.*)|*.*";
+            buttonSaveFile_PMO.Enabled = false;
+            buttonSearch_PMO.Enabled = false;
+            buttonAdd_PMO.Enabled = false;
+            buttonDelete_PMO.Enabled = false;
+            buttonStatic_PMO.Enabled=false;
+            ButtonSortReset_PMO.Enabled = false;
+            ButtonSortStazh_PMO.Enabled = false;
+            ButtonSortSalary_PMO.Enabled = false;
+            ButtonSortName_PMO.Enabled =false;
         }
         private List<Employee> currentEmployees_PMO = new List<Employee>();
         private List<Employee> originalEmployees; // Исходные данные
@@ -61,9 +70,13 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
                     buttonSaveFile_PMO.Enabled = true;
                     buttonSearch_PMO.Enabled = true;
-
-                    //buttonFilter_PMO.Enabled = true;
                     buttonAdd_PMO.Enabled = true;
+                    buttonDelete_PMO.Enabled = true;
+                    buttonStatic_PMO.Enabled = true;
+                    ButtonSortReset_PMO.Enabled = true;
+                    ButtonSortStazh_PMO.Enabled = true;
+                    ButtonSortSalary_PMO.Enabled = true;
+                    ButtonSortName_PMO.Enabled = true;
 
                 }
                 catch (Exception ex)
@@ -200,10 +213,9 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                     FirstName = textBoxNameInput_PMO.Text,
                     Position = textBoxPostInput_PMO.Text,
                     Salary = decimal.Parse(textBoxSalaryInput_PMO.Text),
-
+                    Experience = int.Parse(textBoxStazhInput_PMO.Text)
                 };
 
-                
                 ds.AddEmployee(emp);
 
                 // Добавляем в таблицу
@@ -220,7 +232,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                 textBoxNameInput_PMO.Clear();
                 textBoxPostInput_PMO.Clear();
                 textBoxSalaryInput_PMO.Clear();
-
+                textBoxStazhInput_PMO.Clear();
             }
             catch
             {
