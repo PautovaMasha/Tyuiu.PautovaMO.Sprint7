@@ -36,10 +36,16 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonAbout_PMO = new Button();
             buttonGuide_PMO = new Button();
             groupBoxTabl_PMO = new GroupBox();
+            groupBoxFilter_PMO = new GroupBox();
+            textBox1 = new TextBox();
+            textBoxfilter_PMO = new TextBox();
+            buttonDoneSort_PMO = new Button();
+            buttonDoneFilter_PMO = new Button();
+            comboBoxSort_PMO = new ComboBox();
+            comboBoxFilter_PMO = new ComboBox();
             buttonStatic_PMO = new Button();
             buttonDelete_PMO = new Button();
             groupBoxAdd_PMO = new GroupBox();
-            textBoxStazhInput_PMO = new TextBox();
             textBoxStazh_PMO = new TextBox();
             textBoxSalaryInput_PMO = new TextBox();
             textBoxSalary_PMO = new TextBox();
@@ -62,22 +68,19 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             openFileDialog_PMO = new OpenFileDialog();
             saveFileDialog_PMO = new SaveFileDialog();
             toolTip_PMO = new ToolTip(components);
-            comboBoxFilter_PMO = new ComboBox();
-            groupBoxFilter_PMO = new GroupBox();
-            buttonDoneFilter_PMO = new Button();
+            textBoxStazhInput_PMO = new TextBox();
             panel_PMO.SuspendLayout();
             groupBoxInfo_PMO.SuspendLayout();
             groupBoxTabl_PMO.SuspendLayout();
+            groupBoxFilter_PMO.SuspendLayout();
             groupBoxAdd_PMO.SuspendLayout();
             groupBoxFile_PMO.SuspendLayout();
             groupBoxSearch_PMO.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).BeginInit();
-            groupBoxFilter_PMO.SuspendLayout();
             SuspendLayout();
             // 
             // panel_PMO
             // 
-            panel_PMO.Controls.Add(groupBoxFilter_PMO);
             panel_PMO.Controls.Add(groupBoxInfo_PMO);
             panel_PMO.Controls.Add(groupBoxTabl_PMO);
             panel_PMO.Controls.Add(groupBoxAdd_PMO);
@@ -87,16 +90,16 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             panel_PMO.Dock = DockStyle.Left;
             panel_PMO.Location = new Point(0, 0);
             panel_PMO.Name = "panel_PMO";
-            panel_PMO.Size = new Size(331, 514);
+            panel_PMO.Size = new Size(331, 551);
             panel_PMO.TabIndex = 0;
             // 
             // groupBoxInfo_PMO
             // 
             groupBoxInfo_PMO.Controls.Add(buttonAbout_PMO);
             groupBoxInfo_PMO.Controls.Add(buttonGuide_PMO);
-            groupBoxInfo_PMO.Location = new Point(0, 376);
+            groupBoxInfo_PMO.Location = new Point(3, 467);
             groupBoxInfo_PMO.Name = "groupBoxInfo_PMO";
-            groupBoxInfo_PMO.Size = new Size(328, 84);
+            groupBoxInfo_PMO.Size = new Size(325, 84);
             groupBoxInfo_PMO.TabIndex = 2;
             groupBoxInfo_PMO.TabStop = false;
             groupBoxInfo_PMO.Text = "Информация";
@@ -110,6 +113,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonAbout_PMO.Name = "buttonAbout_PMO";
             buttonAbout_PMO.Size = new Size(60, 53);
             buttonAbout_PMO.TabIndex = 1;
+            toolTip_PMO.SetToolTip(buttonAbout_PMO, "Справка о разработчике");
             buttonAbout_PMO.UseVisualStyleBackColor = false;
             buttonAbout_PMO.Click += buttonAbout_PMO_Click;
             // 
@@ -121,20 +125,99 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonGuide_PMO.Name = "buttonGuide_PMO";
             buttonGuide_PMO.Size = new Size(62, 53);
             buttonGuide_PMO.TabIndex = 0;
+            toolTip_PMO.SetToolTip(buttonGuide_PMO, "Информация о программе");
             buttonGuide_PMO.UseVisualStyleBackColor = false;
             buttonGuide_PMO.Click += buttonGuide_PMO_Click;
             // 
             // groupBoxTabl_PMO
             // 
             groupBoxTabl_PMO.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            groupBoxTabl_PMO.Controls.Add(groupBoxFilter_PMO);
             groupBoxTabl_PMO.Controls.Add(buttonStatic_PMO);
             groupBoxTabl_PMO.Controls.Add(buttonDelete_PMO);
             groupBoxTabl_PMO.Location = new Point(3, 295);
             groupBoxTabl_PMO.Name = "groupBoxTabl_PMO";
-            groupBoxTabl_PMO.Size = new Size(325, 141);
+            groupBoxTabl_PMO.Size = new Size(325, 178);
             groupBoxTabl_PMO.TabIndex = 11;
             groupBoxTabl_PMO.TabStop = false;
             groupBoxTabl_PMO.Text = "Работа с таблицей";
+            // 
+            // groupBoxFilter_PMO
+            // 
+            groupBoxFilter_PMO.Controls.Add(textBox1);
+            groupBoxFilter_PMO.Controls.Add(textBoxfilter_PMO);
+            groupBoxFilter_PMO.Controls.Add(buttonDoneSort_PMO);
+            groupBoxFilter_PMO.Controls.Add(buttonDoneFilter_PMO);
+            groupBoxFilter_PMO.Controls.Add(comboBoxSort_PMO);
+            groupBoxFilter_PMO.Controls.Add(comboBoxFilter_PMO);
+            groupBoxFilter_PMO.Location = new Point(0, 82);
+            groupBoxFilter_PMO.Name = "groupBoxFilter_PMO";
+            groupBoxFilter_PMO.Size = new Size(325, 90);
+            groupBoxFilter_PMO.TabIndex = 13;
+            groupBoxFilter_PMO.TabStop = false;
+            groupBoxFilter_PMO.Text = "Фильтр и сортировка таблицы";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(6, 50);
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(84, 23);
+            textBox1.TabIndex = 10;
+            textBox1.Text = "Сортировка - ";
+            textBox1.TextChanged += textBox2_TextChanged;
+            // 
+            // textBoxfilter_PMO
+            // 
+            textBoxfilter_PMO.Location = new Point(6, 22);
+            textBoxfilter_PMO.Name = "textBoxfilter_PMO";
+            textBoxfilter_PMO.ReadOnly = true;
+            textBoxfilter_PMO.Size = new Size(84, 23);
+            textBoxfilter_PMO.TabIndex = 10;
+            textBoxfilter_PMO.Text = "Фильтр - ";
+            textBoxfilter_PMO.TextChanged += textBox2_TextChanged;
+            // 
+            // buttonDoneSort_PMO
+            // 
+            buttonDoneSort_PMO.BackColor = Color.FromArgb(192, 255, 192);
+            buttonDoneSort_PMO.Location = new Point(238, 50);
+            buttonDoneSort_PMO.Name = "buttonDoneSort_PMO";
+            buttonDoneSort_PMO.Size = new Size(81, 23);
+            buttonDoneSort_PMO.TabIndex = 13;
+            buttonDoneSort_PMO.Text = "применить ";
+            toolTip_PMO.SetToolTip(buttonDoneSort_PMO, "Применить выбранную сортировку к данным");
+            buttonDoneSort_PMO.UseVisualStyleBackColor = false;
+            buttonDoneSort_PMO.Click += buttonDoneFilter_PMO_Click;
+            // 
+            // buttonDoneFilter_PMO
+            // 
+            buttonDoneFilter_PMO.BackColor = Color.FromArgb(192, 255, 192);
+            buttonDoneFilter_PMO.Location = new Point(238, 20);
+            buttonDoneFilter_PMO.Name = "buttonDoneFilter_PMO";
+            buttonDoneFilter_PMO.Size = new Size(81, 23);
+            buttonDoneFilter_PMO.TabIndex = 13;
+            buttonDoneFilter_PMO.Text = "применить ";
+            toolTip_PMO.SetToolTip(buttonDoneFilter_PMO, "Применить выбранный фильтр к данным");
+            buttonDoneFilter_PMO.UseVisualStyleBackColor = false;
+            buttonDoneFilter_PMO.Click += buttonDoneFilter_PMO_Click;
+            // 
+            // comboBoxSort_PMO
+            // 
+            comboBoxSort_PMO.FormattingEnabled = true;
+            comboBoxSort_PMO.Items.AddRange(new object[] { "по зарплате ", "по стажу", "по должности" });
+            comboBoxSort_PMO.Location = new Point(96, 50);
+            comboBoxSort_PMO.Name = "comboBoxSort_PMO";
+            comboBoxSort_PMO.Size = new Size(136, 23);
+            comboBoxSort_PMO.TabIndex = 12;
+            // 
+            // comboBoxFilter_PMO
+            // 
+            comboBoxFilter_PMO.FormattingEnabled = true;
+            comboBoxFilter_PMO.Items.AddRange(new object[] { "Без фильтра", "по зарплате ", "по стажу", "по должности" });
+            comboBoxFilter_PMO.Location = new Point(96, 22);
+            comboBoxFilter_PMO.Name = "comboBoxFilter_PMO";
+            comboBoxFilter_PMO.Size = new Size(136, 23);
+            comboBoxFilter_PMO.TabIndex = 12;
             // 
             // buttonStatic_PMO
             // 
@@ -144,6 +227,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonStatic_PMO.Name = "buttonStatic_PMO";
             buttonStatic_PMO.Size = new Size(62, 53);
             buttonStatic_PMO.TabIndex = 7;
+            toolTip_PMO.SetToolTip(buttonStatic_PMO, "Показать статистику по сотрудникам");
             buttonStatic_PMO.UseVisualStyleBackColor = false;
             buttonStatic_PMO.Click += buttonStatic_PMO_Click;
             // 
@@ -155,14 +239,15 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonDelete_PMO.Name = "buttonDelete_PMO";
             buttonDelete_PMO.Size = new Size(60, 53);
             buttonDelete_PMO.TabIndex = 2;
+            toolTip_PMO.SetToolTip(buttonDelete_PMO, "Удалить выбранного сотрудника");
             buttonDelete_PMO.UseVisualStyleBackColor = false;
             buttonDelete_PMO.Click += buttonDelete_PMO_Click;
             // 
             // groupBoxAdd_PMO
             // 
             groupBoxAdd_PMO.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            groupBoxAdd_PMO.Controls.Add(textBoxStazhInput_PMO);
             groupBoxAdd_PMO.Controls.Add(textBoxStazh_PMO);
+            groupBoxAdd_PMO.Controls.Add(textBoxStazhInput_PMO);
             groupBoxAdd_PMO.Controls.Add(textBoxSalaryInput_PMO);
             groupBoxAdd_PMO.Controls.Add(textBoxSalary_PMO);
             groupBoxAdd_PMO.Controls.Add(textBoxPostInput_PMO);
@@ -174,19 +259,11 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             groupBoxAdd_PMO.Controls.Add(buttonAdd_PMO);
             groupBoxAdd_PMO.Location = new Point(3, 125);
             groupBoxAdd_PMO.Name = "groupBoxAdd_PMO";
-            groupBoxAdd_PMO.Size = new Size(325, 247);
+            groupBoxAdd_PMO.Size = new Size(325, 284);
             groupBoxAdd_PMO.TabIndex = 2;
             groupBoxAdd_PMO.TabStop = false;
             groupBoxAdd_PMO.Text = "Добавление сотрудника";
             groupBoxAdd_PMO.Enter += groupBox1_Enter;
-            // 
-            // textBoxStazhInput_PMO
-            // 
-            textBoxStazhInput_PMO.Location = new Point(135, 141);
-            textBoxStazhInput_PMO.Name = "textBoxStazhInput_PMO";
-            textBoxStazhInput_PMO.Size = new Size(100, 23);
-            textBoxStazhInput_PMO.TabIndex = 10;
-            textBoxStazhInput_PMO.TextChanged += textBox2_TextChanged;
             // 
             // textBoxStazh_PMO
             // 
@@ -200,7 +277,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             // textBoxSalaryInput_PMO
             // 
-            textBoxSalaryInput_PMO.Location = new Point(135, 112);
+            textBoxSalaryInput_PMO.Location = new Point(135, 109);
             textBoxSalaryInput_PMO.Name = "textBoxSalaryInput_PMO";
             textBoxSalaryInput_PMO.Size = new Size(100, 23);
             textBoxSalaryInput_PMO.TabIndex = 10;
@@ -278,6 +355,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonAdd_PMO.Name = "buttonAdd_PMO";
             buttonAdd_PMO.Size = new Size(59, 44);
             buttonAdd_PMO.TabIndex = 6;
+            toolTip_PMO.SetToolTip(buttonAdd_PMO, "Добавить нового сотрудника");
             buttonAdd_PMO.UseVisualStyleBackColor = false;
             buttonAdd_PMO.Click += buttonAdd_PMO_Click;
             // 
@@ -300,6 +378,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonOpenFile_PMO.Name = "buttonOpenFile_PMO";
             buttonOpenFile_PMO.Size = new Size(62, 49);
             buttonOpenFile_PMO.TabIndex = 4;
+            toolTip_PMO.SetToolTip(buttonOpenFile_PMO, "Загрузить данные из CSV файла");
             buttonOpenFile_PMO.UseVisualStyleBackColor = false;
             buttonOpenFile_PMO.Click += buttonOpenFile_PMO_Click;
             // 
@@ -311,6 +390,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonSaveFile_PMO.Name = "buttonSaveFile_PMO";
             buttonSaveFile_PMO.Size = new Size(60, 49);
             buttonSaveFile_PMO.TabIndex = 3;
+            toolTip_PMO.SetToolTip(buttonSaveFile_PMO, "Сохранить текущие данные в CSV файл");
             buttonSaveFile_PMO.UseVisualStyleBackColor = false;
             buttonSaveFile_PMO.Click += buttonSaveFile_PMO_Click;
             // 
@@ -341,6 +421,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonResetSearch_PMO.Name = "buttonResetSearch_PMO";
             buttonResetSearch_PMO.Size = new Size(38, 35);
             buttonResetSearch_PMO.TabIndex = 5;
+            toolTip_PMO.SetToolTip(buttonResetSearch_PMO, "Сбросить поиск и показать всех сотрудников");
             buttonResetSearch_PMO.UseVisualStyleBackColor = false;
             buttonResetSearch_PMO.Click += buttonResetSearch_PMO_Click;
             // 
@@ -352,6 +433,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonSearch_PMO.Name = "buttonSearch_PMO";
             buttonSearch_PMO.Size = new Size(38, 35);
             buttonSearch_PMO.TabIndex = 5;
+            toolTip_PMO.SetToolTip(buttonSearch_PMO, "Поиск сотрудников по фамилии, имени или должности");
             buttonSearch_PMO.UseVisualStyleBackColor = false;
             buttonSearch_PMO.Click += buttonSearch_PMO_Click;
             // 
@@ -360,7 +442,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             splitter_PMO.Dock = DockStyle.Right;
             splitter_PMO.Location = new Point(328, 0);
             splitter_PMO.Name = "splitter_PMO";
-            splitter_PMO.Size = new Size(3, 514);
+            splitter_PMO.Size = new Size(3, 551);
             splitter_PMO.TabIndex = 1;
             splitter_PMO.TabStop = false;
             // 
@@ -370,7 +452,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             dataGridViewEmployees_PMO.Dock = DockStyle.Fill;
             dataGridViewEmployees_PMO.Location = new Point(331, 0);
             dataGridViewEmployees_PMO.Name = "dataGridViewEmployees_PMO";
-            dataGridViewEmployees_PMO.Size = new Size(541, 514);
+            dataGridViewEmployees_PMO.Size = new Size(541, 551);
             dataGridViewEmployees_PMO.TabIndex = 1;
             dataGridViewEmployees_PMO.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -378,40 +460,25 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             openFileDialog_PMO.FileName = "openFileDialog1";
             // 
-            // comboBoxFilter_PMO
+            // toolTip_PMO
             // 
-            comboBoxFilter_PMO.FormattingEnabled = true;
-            comboBoxFilter_PMO.Items.AddRange(new object[] { "по зарплате ", "по стажу", "по должности" });
-            comboBoxFilter_PMO.Location = new Point(9, 21);
-            comboBoxFilter_PMO.Name = "comboBoxFilter_PMO";
-            comboBoxFilter_PMO.Size = new Size(136, 23);
-            comboBoxFilter_PMO.TabIndex = 12;
+            toolTip_PMO.ToolTipIcon = ToolTipIcon.Info;
+            toolTip_PMO.ToolTipTitle = "Подсказка";
+            toolTip_PMO.Popup += toolTip_PMO_Popup;
             // 
-            // groupBoxFilter_PMO
+            // textBoxStazhInput_PMO
             // 
-            groupBoxFilter_PMO.Controls.Add(buttonDoneFilter_PMO);
-            groupBoxFilter_PMO.Controls.Add(comboBoxFilter_PMO);
-            groupBoxFilter_PMO.Location = new Point(3, 458);
-            groupBoxFilter_PMO.Name = "groupBoxFilter_PMO";
-            groupBoxFilter_PMO.Size = new Size(325, 56);
-            groupBoxFilter_PMO.TabIndex = 13;
-            groupBoxFilter_PMO.TabStop = false;
-            groupBoxFilter_PMO.Text = "Фильтр таблицы";
-            // 
-            // buttonDoneFilter_PMO
-            // 
-            buttonDoneFilter_PMO.Location = new Point(160, 21);
-            buttonDoneFilter_PMO.Name = "buttonDoneFilter_PMO";
-            buttonDoneFilter_PMO.Size = new Size(72, 23);
-            buttonDoneFilter_PMO.TabIndex = 13;
-            buttonDoneFilter_PMO.UseVisualStyleBackColor = true;
-            buttonDoneFilter_PMO.Click += buttonDoneFilter_PMO_Click;
+            textBoxStazhInput_PMO.Location = new Point(135, 141);
+            textBoxStazhInput_PMO.Name = "textBoxStazhInput_PMO";
+            textBoxStazhInput_PMO.Size = new Size(100, 23);
+            textBoxStazhInput_PMO.TabIndex = 10;
+            textBoxStazhInput_PMO.TextChanged += textBox2_TextChanged;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(872, 514);
+            ClientSize = new Size(872, 551);
             Controls.Add(dataGridViewEmployees_PMO);
             Controls.Add(panel_PMO);
             Name = "FormMain";
@@ -421,13 +488,14 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             panel_PMO.ResumeLayout(false);
             groupBoxInfo_PMO.ResumeLayout(false);
             groupBoxTabl_PMO.ResumeLayout(false);
+            groupBoxFilter_PMO.ResumeLayout(false);
+            groupBoxFilter_PMO.PerformLayout();
             groupBoxAdd_PMO.ResumeLayout(false);
             groupBoxAdd_PMO.PerformLayout();
             groupBoxFile_PMO.ResumeLayout(false);
             groupBoxSearch_PMO.ResumeLayout(false);
             groupBoxSearch_PMO.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployees_PMO).EndInit();
-            groupBoxFilter_PMO.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -456,7 +524,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         private TextBox textBoxSalaryInput_PMO;
         private TextBox textBoxPostInput_PMO;
         private TextBox textBoxNameInput_PMO;
-        private TextBox textBoxStazhInput_PMO;
+        private TextBox textBoxfilter_PMO;
         private GroupBox groupBoxTabl_PMO;
         private GroupBox groupBoxInfo_PMO;
         private Button buttonAbout_PMO;
@@ -469,5 +537,9 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         private GroupBox groupBoxFilter_PMO;
         private ComboBox comboBoxFilter_PMO;
         private Button buttonDoneFilter_PMO;
+        private Button buttonDoneSort_PMO;
+        private ComboBox comboBoxSort_PMO;
+        private TextBox textBox1;
+        private TextBox textBoxStazhInput_PMO;
     }
 }
