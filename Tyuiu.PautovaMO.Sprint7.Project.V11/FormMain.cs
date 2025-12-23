@@ -185,7 +185,6 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         private void buttonAdd_PMO_Click(object sender, EventArgs e)
         {
-            // Проверяем заполнение
             if (textBoxFamiliaInput_PMO.Text == "" || textBoxNameInput_PMO.Text == "")
             {
                 MessageBox.Show("Заполните фамилию и имя");
@@ -201,11 +200,10 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                     FirstName = textBoxNameInput_PMO.Text,
                     Position = textBoxPostInput_PMO.Text,
                     Salary = decimal.Parse(textBoxSalaryInput_PMO.Text),
-                    Experience = int.Parse(textBoxfilter_PMO.Text)
+
                 };
 
-                // Добавляем
-                DataService ds = new DataService();
+                
                 ds.AddEmployee(emp);
 
                 // Добавляем в таблицу
@@ -222,23 +220,18 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                 textBoxNameInput_PMO.Clear();
                 textBoxPostInput_PMO.Clear();
                 textBoxSalaryInput_PMO.Clear();
-                textBoxfilter_PMO.Clear();
+
             }
             catch
             {
                 MessageBox.Show("Проверьте правильность ввода данных");
             }
 
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "CSV файлы (*.csv)|*.csv";
-            saveDialog.FileName = "сотрудники_обновленные.csv";
-
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                ds.SaveToCSV(saveDialog.FileName, currentEmployees_PMO);
-                MessageBox.Show("Сотрудник добавлен и данные сохранены!");
-            }
         }
+
+
+
+
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -270,30 +263,42 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         private void buttonSaveFile_PMO_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "CSV файлы (*.csv)|*.csv";
-            saveDialog.FileName = "сотрудники_обновленные.csv";
-            saveDialog.Title = "Сохранить данные сотрудников";
+            saveFileDialog_PMO.FileName = "сотрудники (измененно) .csv";
+            saveFileDialog_PMO.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog_PMO.ShowDialog();
 
-            // 2. Предлагаем сохранить на рабочий стол по умолчанию
-            saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = saveFileDialog_PMO.FileName;
 
-            // 3. Показываем диалог
-            if (saveDialog.ShowDialog() == DialogResult.OK)
+            if (!string.IsNullOrEmpty(path))
             {
-                try
+                if (File.Exists(path))
                 {
-                    // 4. Передаем ВЫБРАННЫЙ пользователем путь
-                    ds.SaveToCSV(saveDialog.FileName, currentEmployees_PMO);
+                    File.Delete(path);
+                }
 
-                    MessageBox.Show($"Файл сохранен:\n{saveDialog.FileName}",
-                        "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
+                int rows = dataGridViewEmployees_PMO.RowCount;
+                int columns = dataGridViewEmployees_PMO.ColumnCount;
+                string str = "";
+
+                for (int i = 0; i < rows; i++)
                 {
-                    MessageBox.Show($"Ошибка сохранения: {ex.Message}",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    for (int j = 0; j < columns; j++)
+                    {
+                        str = str + dataGridViewEmployees_PMO.Rows[i].Cells[j].Value;
+
+                        if (j != columns - 1)
+                        {
+                            str = str + ";";
+                        }
+                    }
+                    File.AppendAllText(path, str + Environment.NewLine);
+                    str = "";
                 }
+
+                MessageBox.Show($"Файл сохранен на рабочем столе:\n{Path.GetFileName(path)}",
+                               "Сохранено",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Information);
             }
         }
 
@@ -310,7 +315,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             var stats = ds.GetStatistics(currentEmployees_PMO);
 
 
-            FormStatistics formStats = new FormStatistics(stats, currentEmployees_PMO);
+            var formStats = new FormStatistics(currentEmployees_PMO);
             formStats.ShowDialog();
         }
 
@@ -332,180 +337,14 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
 
         }
 
-        private void buttonDoneFilter_PMO_Click(object sender, EventArgs e)
+        
+
+        private void UpdateDataGridView(List<Employee> employees)
         {
-            if (comboBoxFilter_PMO.SelectedItem == null)
-            {
-                MessageBox.Show("Выберите тип фильтра!", "Внимание",
-                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string filterType = comboBoxFilter_PMO.SelectedItem.ToString();
-
-            if (filterType == "Без фильтра")
-            {
-                currentEmployees_PMO = new List<Employee>(originalEmployees);
-                DisplayEmployees(currentEmployees_PMO);
-            }
-            else
-            {
-                currentEmployees_PMO = ApplyFilter(originalEmployees, filterType);
-                DisplayEmployees(currentEmployees_PMO);
-            }
-        }
-
-        private List<Employee> ApplyFilter(List<Employee> employees, string filterType)
-        {
-            switch (filterType)
-            {
-                case "По зарплате":
-                    string minSalary = Interaction.InputBox(
-                        "Минимальная зарплата:",
-                        "Фильтр по зарплате",
-                        "0");
-
-                    // Если пользователь нажал Cancel - возвращаем исходный список
-                    if (string.IsNullOrEmpty(minSalary))
-                        return employees;
-
-                    string maxSalary = Interaction.InputBox(
-                        "Максимальная зарплата:",
-                        "Фильтр по зарплате",
-                        "1000000");
-
-                    // Если пользователь нажал Cancel - возвращаем исходный список
-                    if (string.IsNullOrEmpty(maxSalary))
-                        return employees;
-
-                    if (decimal.TryParse(minSalary, out decimal min) &&
-                        decimal.TryParse(maxSalary, out decimal max))
-                    {
-                        if (min > max)
-                        {
-                            MessageBox.Show("Минимальная зарплата не может быть больше максимальной!",
-                                          "Ошибка",
-                                          MessageBoxButtons.OK,
-                                          MessageBoxIcon.Warning);
-                            return employees;
-                        }
-
-                        return employees
-                            .Where(emp => emp.Salary >= min && emp.Salary <= max)
-                            .ToList();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Введите корректные числовые значения для зарплаты!",
-                                      "Ошибка",
-                                      MessageBoxButtons.OK,
-                                      MessageBoxIcon.Error);
-                    }
-                    break;
-
-                case "По стажу":
-                    string minExperience = Interaction.InputBox(
-                        "Минимальный стаж (лет):",
-                        "Фильтр по стажу",
-                        "0");
-
-                    if (string.IsNullOrEmpty(minExperience))
-                        return employees;
-
-                    string maxExperience = Interaction.InputBox(
-                        "Максимальный стаж (лет):",
-                        "Фильтр по стажу",
-                        "50");
-
-                    if (string.IsNullOrEmpty(maxExperience))
-                        return employees;
-
-                    if (int.TryParse(minExperience, out int minExp) &&
-                        int.TryParse(maxExperience, out int maxExp))
-                    {
-                        if (minExp > maxExp)
-                        {
-                            MessageBox.Show("Минимальный стаж не может быть больше максимального!",
-                                          "Ошибка",
-                                          MessageBoxButtons.OK,
-                                          MessageBoxIcon.Warning);
-                            return employees;
-                        }
-
-                        if (minExp < 0 || maxExp < 0)
-                        {
-                            MessageBox.Show("Стаж не может быть отрицательным!",
-                                          "Ошибка",
-                                          MessageBoxButtons.OK,
-                                          MessageBoxIcon.Warning);
-                            return employees;
-                        }
-
-                        return employees
-                            .Where(emp => emp.Experience >= minExp && emp.Experience <= maxExp)
-                            .ToList();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Введите корректные целые числа для стажа!",
-                                      "Ошибка",
-                                      MessageBoxButtons.OK,
-                                      MessageBoxIcon.Error);
-                    }
-                    break;
-
-                case "По должности":
-                    // Получаем список всех должностей для подсказки
-                    string allPositions = string.Join(", ", employees
-                        .Select(e => e.Position)
-                        .Distinct()
-                        .OrderBy(p => p));
-
-                    string position = Interaction.InputBox(
-                        $"Введите должность:\n(Доступные: {allPositions})",
-                        "Фильтр по должности",
-                        "");
-
-                    if (!string.IsNullOrEmpty(position))
-                    {
-                        return employees
-                            .Where(emp => emp.Position.Equals(position, StringComparison.OrdinalIgnoreCase))
-                            .ToList();
-                    }
-                    break;
-
-                case "По имени":
-                    string name = Interaction.InputBox(
-                        "Введите имя или фамилию (можно часть):",
-                        "Фильтр по имени",
-                        "");
-
-                    if (!string.IsNullOrEmpty(name))
-                    {
-                        return employees
-                            .Where(emp => (emp.LastName + " " + emp.FirstName).IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
-                            .ToList();
-                    }
-                    break;
-            }
-
-            return employees;
-        }
-        private void DisplayEmployees(List<Employee> employees)
-        {
-            // Очищаем DataGridView
             dataGridViewEmployees_PMO.Rows.Clear();
 
-            // Если список пустой
-            if (employees == null || employees.Count == 0)
+            foreach (var emp in employees)
             {
-                return;
-            }
-
-            // Заполняем DataGridView
-            foreach (Employee emp in employees)
-            {
-                // Создаем полное имя из фамилии и имени
                 dataGridViewEmployees_PMO.Rows.Add(
                     emp.LastName,
                     emp.FirstName,
@@ -516,9 +355,57 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             }
         }
 
+
+
         private void toolTip_PMO_Popup(object sender, PopupEventArgs e)
         {
 
         }
+
+
+
+        private void ButtonSortReset_PMO_Click(object sender, EventArgs e)
+        {
+            // Очищаем поле поиска
+            textBoxSearch_PMO.Clear();
+
+            // Очищаем таблицу
+            dataGridViewEmployees_PMO.Rows.Clear();
+
+            // Заполняем из ИСХОДНОГО списка (не currentEmployees_PMO!)
+            foreach (Employee emp in originalEmployees) 
+            {
+                dataGridViewEmployees_PMO.Rows.Add(
+                    emp.LastName,
+                    emp.FirstName,
+                    emp.Position,
+                    emp.Salary.ToString("N2"),
+                    emp.Experience.ToString()
+                );
+            }
+        }
+
+        private void ButtonSortStazh_PMO_Click(object sender, EventArgs e)
+        {
+            currentEmployees_PMO = ds.SortByExperienceDesc(currentEmployees_PMO);
+            UpdateDataGridView(currentEmployees_PMO);
+        }
+
+        private void ButtonSortSalary_PMO_Click(object sender, EventArgs e)
+        {
+            currentEmployees_PMO = ds.SortBySalaryDesc(currentEmployees_PMO);
+            UpdateDataGridView(currentEmployees_PMO);
+        }
+
+        private void ButtonSortName_PMO_Click(object sender, EventArgs e)
+        {
+            
+            currentEmployees_PMO = ds.SortByNameAsc(currentEmployees_PMO);
+            UpdateDataGridView(currentEmployees_PMO);
+
+        }
+
+
+        
     }
 }

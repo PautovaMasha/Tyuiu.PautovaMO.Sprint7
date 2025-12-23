@@ -37,16 +37,15 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             buttonGuide_PMO = new Button();
             groupBoxTabl_PMO = new GroupBox();
             groupBoxFilter_PMO = new GroupBox();
-            textBox1 = new TextBox();
-            textBoxfilter_PMO = new TextBox();
-            buttonDoneSort_PMO = new Button();
-            buttonDoneFilter_PMO = new Button();
-            comboBoxSort_PMO = new ComboBox();
-            comboBoxFilter_PMO = new ComboBox();
+            ButtonSortStazh_PMO = new Button();
+            ButtonSortSalary_PMO = new Button();
+            ButtonSortName_PMO = new Button();
+            ButtonSortReset_PMO = new Button();
             buttonStatic_PMO = new Button();
             buttonDelete_PMO = new Button();
             groupBoxAdd_PMO = new GroupBox();
             textBoxStazh_PMO = new TextBox();
+            textBoxStazhInput_PMO = new TextBox();
             textBoxSalaryInput_PMO = new TextBox();
             textBoxSalary_PMO = new TextBox();
             textBoxPostInput_PMO = new TextBox();
@@ -68,7 +67,6 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             openFileDialog_PMO = new OpenFileDialog();
             saveFileDialog_PMO = new SaveFileDialog();
             toolTip_PMO = new ToolTip(components);
-            textBoxStazhInput_PMO = new TextBox();
             panel_PMO.SuspendLayout();
             groupBoxInfo_PMO.SuspendLayout();
             groupBoxTabl_PMO.SuspendLayout();
@@ -109,7 +107,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             buttonAbout_PMO.BackColor = SystemColors.GradientInactiveCaption;
             buttonAbout_PMO.Image = (Image)resources.GetObject("buttonAbout_PMO.Image");
-            buttonAbout_PMO.Location = new Point(175, 23);
+            buttonAbout_PMO.Location = new Point(172, 22);
             buttonAbout_PMO.Name = "buttonAbout_PMO";
             buttonAbout_PMO.Size = new Size(60, 53);
             buttonAbout_PMO.TabIndex = 1;
@@ -121,7 +119,7 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             buttonGuide_PMO.BackColor = SystemColors.GradientInactiveCaption;
             buttonGuide_PMO.Image = (Image)resources.GetObject("buttonGuide_PMO.Image");
-            buttonGuide_PMO.Location = new Point(86, 23);
+            buttonGuide_PMO.Location = new Point(83, 22);
             buttonGuide_PMO.Name = "buttonGuide_PMO";
             buttonGuide_PMO.Size = new Size(62, 53);
             buttonGuide_PMO.TabIndex = 0;
@@ -144,12 +142,10 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             // groupBoxFilter_PMO
             // 
-            groupBoxFilter_PMO.Controls.Add(textBox1);
-            groupBoxFilter_PMO.Controls.Add(textBoxfilter_PMO);
-            groupBoxFilter_PMO.Controls.Add(buttonDoneSort_PMO);
-            groupBoxFilter_PMO.Controls.Add(buttonDoneFilter_PMO);
-            groupBoxFilter_PMO.Controls.Add(comboBoxSort_PMO);
-            groupBoxFilter_PMO.Controls.Add(comboBoxFilter_PMO);
+            groupBoxFilter_PMO.Controls.Add(ButtonSortStazh_PMO);
+            groupBoxFilter_PMO.Controls.Add(ButtonSortSalary_PMO);
+            groupBoxFilter_PMO.Controls.Add(ButtonSortName_PMO);
+            groupBoxFilter_PMO.Controls.Add(ButtonSortReset_PMO);
             groupBoxFilter_PMO.Location = new Point(0, 82);
             groupBoxFilter_PMO.Name = "groupBoxFilter_PMO";
             groupBoxFilter_PMO.Size = new Size(325, 90);
@@ -157,67 +153,53 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             groupBoxFilter_PMO.TabStop = false;
             groupBoxFilter_PMO.Text = "Фильтр и сортировка таблицы";
             // 
-            // textBox1
+            // ButtonSortStazh_PMO
             // 
-            textBox1.Location = new Point(6, 50);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(84, 23);
-            textBox1.TabIndex = 10;
-            textBox1.Text = "Сортировка - ";
-            textBox1.TextChanged += textBox2_TextChanged;
+            ButtonSortStazh_PMO.BackColor = Color.FromArgb(192, 255, 192);
+            ButtonSortStazh_PMO.Location = new Point(183, 22);
+            ButtonSortStazh_PMO.Name = "ButtonSortStazh_PMO";
+            ButtonSortStazh_PMO.Size = new Size(81, 62);
+            ButtonSortStazh_PMO.TabIndex = 13;
+            ButtonSortStazh_PMO.Text = "Сортировка по стажу";
+            toolTip_PMO.SetToolTip(ButtonSortStazh_PMO, "Сортировать по стажу (от большего к меньшему)");
+            ButtonSortStazh_PMO.UseVisualStyleBackColor = false;
+            ButtonSortStazh_PMO.Click += ButtonSortStazh_PMO_Click;
             // 
-            // textBoxfilter_PMO
+            // ButtonSortSalary_PMO
             // 
-            textBoxfilter_PMO.Location = new Point(6, 22);
-            textBoxfilter_PMO.Name = "textBoxfilter_PMO";
-            textBoxfilter_PMO.ReadOnly = true;
-            textBoxfilter_PMO.Size = new Size(84, 23);
-            textBoxfilter_PMO.TabIndex = 10;
-            textBoxfilter_PMO.Text = "Фильтр - ";
-            textBoxfilter_PMO.TextChanged += textBox2_TextChanged;
+            ButtonSortSalary_PMO.BackColor = Color.FromArgb(192, 255, 192);
+            ButtonSortSalary_PMO.Location = new Point(96, 22);
+            ButtonSortSalary_PMO.Name = "ButtonSortSalary_PMO";
+            ButtonSortSalary_PMO.Size = new Size(81, 62);
+            ButtonSortSalary_PMO.TabIndex = 13;
+            ButtonSortSalary_PMO.Text = "Сортировка по зарплате";
+            toolTip_PMO.SetToolTip(ButtonSortSalary_PMO, "Сортировка по зарплате ( от большего к меньшему)");
+            ButtonSortSalary_PMO.UseVisualStyleBackColor = false;
+            ButtonSortSalary_PMO.Click += ButtonSortSalary_PMO_Click;
             // 
-            // buttonDoneSort_PMO
+            // ButtonSortName_PMO
             // 
-            buttonDoneSort_PMO.BackColor = Color.FromArgb(192, 255, 192);
-            buttonDoneSort_PMO.Location = new Point(238, 50);
-            buttonDoneSort_PMO.Name = "buttonDoneSort_PMO";
-            buttonDoneSort_PMO.Size = new Size(81, 23);
-            buttonDoneSort_PMO.TabIndex = 13;
-            buttonDoneSort_PMO.Text = "применить ";
-            toolTip_PMO.SetToolTip(buttonDoneSort_PMO, "Применить выбранную сортировку к данным");
-            buttonDoneSort_PMO.UseVisualStyleBackColor = false;
-            buttonDoneSort_PMO.Click += buttonDoneFilter_PMO_Click;
+            ButtonSortName_PMO.BackColor = Color.FromArgb(192, 255, 192);
+            ButtonSortName_PMO.Location = new Point(9, 22);
+            ButtonSortName_PMO.Name = "ButtonSortName_PMO";
+            ButtonSortName_PMO.Size = new Size(81, 62);
+            ButtonSortName_PMO.TabIndex = 13;
+            ButtonSortName_PMO.Text = "Сортировка по фамилии";
+            toolTip_PMO.SetToolTip(ButtonSortName_PMO, "Сортрировка по фимилии ( от а до я)");
+            ButtonSortName_PMO.UseVisualStyleBackColor = false;
+            ButtonSortName_PMO.Click += ButtonSortName_PMO_Click;
             // 
-            // buttonDoneFilter_PMO
+            // ButtonSortReset_PMO
             // 
-            buttonDoneFilter_PMO.BackColor = Color.FromArgb(192, 255, 192);
-            buttonDoneFilter_PMO.Location = new Point(238, 20);
-            buttonDoneFilter_PMO.Name = "buttonDoneFilter_PMO";
-            buttonDoneFilter_PMO.Size = new Size(81, 23);
-            buttonDoneFilter_PMO.TabIndex = 13;
-            buttonDoneFilter_PMO.Text = "применить ";
-            toolTip_PMO.SetToolTip(buttonDoneFilter_PMO, "Применить выбранный фильтр к данным");
-            buttonDoneFilter_PMO.UseVisualStyleBackColor = false;
-            buttonDoneFilter_PMO.Click += buttonDoneFilter_PMO_Click;
-            // 
-            // comboBoxSort_PMO
-            // 
-            comboBoxSort_PMO.FormattingEnabled = true;
-            comboBoxSort_PMO.Items.AddRange(new object[] { "по зарплате ", "по стажу", "по должности" });
-            comboBoxSort_PMO.Location = new Point(96, 50);
-            comboBoxSort_PMO.Name = "comboBoxSort_PMO";
-            comboBoxSort_PMO.Size = new Size(136, 23);
-            comboBoxSort_PMO.TabIndex = 12;
-            // 
-            // comboBoxFilter_PMO
-            // 
-            comboBoxFilter_PMO.FormattingEnabled = true;
-            comboBoxFilter_PMO.Items.AddRange(new object[] { "Без фильтра", "по зарплате ", "по стажу", "по должности" });
-            comboBoxFilter_PMO.Location = new Point(96, 22);
-            comboBoxFilter_PMO.Name = "comboBoxFilter_PMO";
-            comboBoxFilter_PMO.Size = new Size(136, 23);
-            comboBoxFilter_PMO.TabIndex = 12;
+            ButtonSortReset_PMO.BackColor = Color.FromArgb(255, 128, 128);
+            ButtonSortReset_PMO.Location = new Point(270, 42);
+            ButtonSortReset_PMO.Name = "ButtonSortReset_PMO";
+            ButtonSortReset_PMO.Size = new Size(49, 23);
+            ButtonSortReset_PMO.TabIndex = 13;
+            ButtonSortReset_PMO.Text = "сброс";
+            toolTip_PMO.SetToolTip(ButtonSortReset_PMO, "отменить все выполненные операции над таблицей (в том числе отменится удаление сотрудника)\r\n");
+            ButtonSortReset_PMO.UseVisualStyleBackColor = false;
+            ButtonSortReset_PMO.Click += ButtonSortReset_PMO_Click;
             // 
             // buttonStatic_PMO
             // 
@@ -274,6 +256,14 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             textBoxStazh_PMO.TabIndex = 10;
             textBoxStazh_PMO.Text = "Введите стаж";
             textBoxStazh_PMO.TextChanged += textBox2_TextChanged;
+            // 
+            // textBoxStazhInput_PMO
+            // 
+            textBoxStazhInput_PMO.Location = new Point(135, 141);
+            textBoxStazhInput_PMO.Name = "textBoxStazhInput_PMO";
+            textBoxStazhInput_PMO.Size = new Size(100, 23);
+            textBoxStazhInput_PMO.TabIndex = 10;
+            textBoxStazhInput_PMO.TextChanged += textBox2_TextChanged;
             // 
             // textBoxSalaryInput_PMO
             // 
@@ -462,17 +452,10 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             // 
             // toolTip_PMO
             // 
+            toolTip_PMO.IsBalloon = true;
             toolTip_PMO.ToolTipIcon = ToolTipIcon.Info;
             toolTip_PMO.ToolTipTitle = "Подсказка";
             toolTip_PMO.Popup += toolTip_PMO_Popup;
-            // 
-            // textBoxStazhInput_PMO
-            // 
-            textBoxStazhInput_PMO.Location = new Point(135, 141);
-            textBoxStazhInput_PMO.Name = "textBoxStazhInput_PMO";
-            textBoxStazhInput_PMO.Size = new Size(100, 23);
-            textBoxStazhInput_PMO.TabIndex = 10;
-            textBoxStazhInput_PMO.TextChanged += textBox2_TextChanged;
             // 
             // FormMain
             // 
@@ -489,7 +472,6 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             groupBoxInfo_PMO.ResumeLayout(false);
             groupBoxTabl_PMO.ResumeLayout(false);
             groupBoxFilter_PMO.ResumeLayout(false);
-            groupBoxFilter_PMO.PerformLayout();
             groupBoxAdd_PMO.ResumeLayout(false);
             groupBoxAdd_PMO.PerformLayout();
             groupBoxFile_PMO.ResumeLayout(false);
@@ -524,7 +506,6 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         private TextBox textBoxSalaryInput_PMO;
         private TextBox textBoxPostInput_PMO;
         private TextBox textBoxNameInput_PMO;
-        private TextBox textBoxfilter_PMO;
         private GroupBox groupBoxTabl_PMO;
         private GroupBox groupBoxInfo_PMO;
         private Button buttonAbout_PMO;
@@ -535,11 +516,10 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         private Button buttonResetSearch_PMO;
         private TextBox textBoxSearch_PMO;
         private GroupBox groupBoxFilter_PMO;
-        private ComboBox comboBoxFilter_PMO;
-        private Button buttonDoneFilter_PMO;
-        private Button buttonDoneSort_PMO;
-        private ComboBox comboBoxSort_PMO;
-        private TextBox textBox1;
         private TextBox textBoxStazhInput_PMO;
+        private Button ButtonSortName_PMO;
+        private Button ButtonSortStazh_PMO;
+        private Button ButtonSortSalary_PMO;
+        private Button ButtonSortReset_PMO;
     }
 }

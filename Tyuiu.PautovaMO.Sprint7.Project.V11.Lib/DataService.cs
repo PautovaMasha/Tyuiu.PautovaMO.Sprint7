@@ -168,60 +168,37 @@
                 return employeesList.OrderByDescending(e => e.Experience).ToList();
             }
 
-            // ==================== 5. ФИЛЬТРАЦИЯ ====================
+        // ==================== 5. ФИЛЬТРАЦИЯ ====================
 
-            // Фильтр по зарплате (от и до)
-            public List<Employee> FilterBySalary(List<Employee> employeesList, decimal min, decimal max)
+        public List<Employee> FilterBySearchText(List<Employee> employeesList, string searchText)
+        {
+            if (string.IsNullOrEmpty(searchText))
+                return employeesList; // Если пустой поиск - возвращаем всех
+
+            string searchLower = searchText.ToLower();
+
+            // Фильтрация по всем полям
+            List<Employee> result = new List<Employee>();
+
+            foreach (Employee emp in employeesList)
             {
-                List<Employee> result = new List<Employee>();
-
-                foreach (Employee emp in employeesList)
+                if (emp.LastName.ToLower().Contains(searchLower) ||
+                    emp.FirstName.ToLower().Contains(searchLower) ||
+                    emp.Position.ToLower().Contains(searchLower) ||
+                    emp.Salary.ToString().Contains(searchText) || // Без ToLower для чисел
+                    emp.Experience.ToString().Contains(searchText))
                 {
-                    if (emp.Salary >= min && emp.Salary <= max)
-                    {
-                        result.Add(emp);
-                    }
+                    result.Add(emp);
                 }
-
-                return result;
             }
 
-            // Фильтр по стажу (от и до)
-            public List<Employee> FilterByExperience(List<Employee> employeesList, int min, int max)
-            {
-                List<Employee> result = new List<Employee>();
+            return result;
+        }
 
-                foreach (Employee emp in employeesList)
-                {
-                    if (emp.Experience >= min && emp.Experience <= max)
-                    {
-                        result.Add(emp);
-                    }
-                }
+        // ==================== 6. РАБОТА СО СПИСКОМ ====================
 
-                return result;
-            }
-
-            // Фильтр по должности (точное совпадение)
-            public List<Employee> FilterByPosition(List<Employee> employeesList, string position)
-            {
-                List<Employee> result = new List<Employee>();
-
-                foreach (Employee emp in employeesList)
-                {
-                    if (emp.Position.ToLower() == position.ToLower())
-                    {
-                        result.Add(emp);
-                    }
-                }
-
-                return result;
-            }
-
-            // ==================== 6. РАБОТА СО СПИСКОМ ====================
-
-            // Добавить сотрудника
-            public void AddEmployee(Employee employee)
+        // Добавить сотрудника
+        public void AddEmployee(Employee employee)
             {
                 employees.Add(employee);
             }
