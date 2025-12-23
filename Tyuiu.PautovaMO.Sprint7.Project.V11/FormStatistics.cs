@@ -16,14 +16,14 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
     {
 
         private List<Employee> employees;
-        private DataService ds = new DataService(); 
+        private DataService ds = new DataService();
 
         public FormStatistics(List<Employee> employees)
         {
             InitializeComponent();
             this.employees = employees;
 
-            
+
             var stats = ds.GetStatistics(employees);
 
             // Выводим статистику
@@ -33,24 +33,22 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             textBoxMaxSalaryRes_PMO.Text = $"{stats.maxSalary:N2} руб.";
             textBoxtotalSalaryRes_PMO.Text = $"{stats.totalSalary:N2} руб.";
 
-            // Строим диаграмму
-            BuildChart();
+            ChartSozd();
         }
 
-        private void BuildChart()
+        private void ChartSozd()
         {
             if (employees == null || employees.Count == 0) return;
 
             chartEmployees_PMO.Series.Clear();
             chartEmployees_PMO.Titles.Clear();
 
-            
+
             chartEmployees_PMO.Titles.Add($"Распределение по должностям\nВсего сотрудников: {employees.Count}");
             chartEmployees_PMO.Titles[0].Font = new Font("Arial", 11, FontStyle.Bold);
 
-            // Создаем кольцевую диаграмму
             Series series = new Series("Должности");
-            series.ChartType = SeriesChartType.Doughnut; 
+            series.ChartType = SeriesChartType.Doughnut; //кольцевая диаграмма
 
             // Настройки отображения
             series.IsValueShownAsLabel = true;
@@ -59,13 +57,11 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             series.BorderWidth = 2;
             series.BorderColor = Color.White;
 
-            // Толщина кольца (30% радиуса)
+            // Толщина кольца
             series["DoughnutRadius"] = "30";
 
             // Группируем данные
-            var groups = employees
-                .GroupBy(e => e.Position)
-                .Select(g => new
+            var groups = employees.GroupBy(e => e.Position).Select(g => new
                 {
                     Position = g.Key,
                     Count = g.Count(),
@@ -74,17 +70,17 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
                 .OrderByDescending(g => g.Count)
                 .ToList();
 
-            // Цветовая палитра
+            // Цвета в кругу
             Color[] palette =
             {
-        Color.FromArgb(65, 105, 225),   // RoyalBlue
-        Color.FromArgb(220, 20, 60),    // Crimson
-        Color.FromArgb(34, 139, 34),    // ForestGreen
-        Color.FromArgb(255, 140, 0),    // DarkOrange
-        Color.FromArgb(138, 43, 226),   // BlueViolet
-        Color.FromArgb(255, 215, 0),    // Gold
-        Color.FromArgb(50, 205, 50),    // LimeGreen
-        Color.FromArgb(199, 21, 133)    // MediumVioletRed
+        Color.FromArgb(65, 105, 225),   
+        Color.FromArgb(220, 20, 60),    
+        Color.FromArgb(34, 139, 34),    
+        Color.FromArgb(255, 140, 0),    
+        Color.FromArgb(138, 43, 226),   
+        Color.FromArgb(255, 215, 0),    
+        Color.FromArgb(50, 205, 50),    
+        Color.FromArgb(199, 21, 133)    
     };
 
             // Добавляем данные
@@ -103,8 +99,6 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
             }
 
             chartEmployees_PMO.Series.Add(series);
-
-            
         }
 
 
@@ -112,26 +106,27 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11
         {
             this.Text = $"Статистика сотрудников";
         }
-    
-
-
-        private void FormChart_Load(object sender, EventArgs e)
-        {
- 
-        }
-    
-
 
         private void buttonOk_PMO_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void chartEmployees_PMO_Click(object sender, EventArgs e)
+
+
+        private void FormChart_Load(object sender, EventArgs e)
         {
-            
+
         }
 
-        
+        private void chartEmployees_PMO_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxCountRes_PMO_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

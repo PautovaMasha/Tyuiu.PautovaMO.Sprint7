@@ -55,7 +55,7 @@
             chartEmployees_PMO.Location = new Point(326, 12);
             chartEmployees_PMO.Name = "chartEmployees_PMO";
             series1.ChartArea = "chartEmployees_PMO";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartEmployees_PMO.Series.Add(series1);
@@ -93,6 +93,7 @@
             textBoxCountRes_PMO.ReadOnly = true;
             textBoxCountRes_PMO.Size = new Size(123, 23);
             textBoxCountRes_PMO.TabIndex = 1;
+            textBoxCountRes_PMO.TextChanged += textBoxCountRes_PMO_TextChanged;
             // 
             // textBoxAvgSalary_PMO
             // 

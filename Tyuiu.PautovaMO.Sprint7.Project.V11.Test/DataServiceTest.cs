@@ -14,11 +14,10 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11.Test
  
             DataService ds = new DataService();
 
-            // Создаем тестового сотрудника
             Employee testEmp = new Employee();
-            testEmp.LastName = "Тестов";
-            testEmp.FirstName = "Тест";
-            testEmp.Position = "Тестер";
+            testEmp.LastName = "Иванов";
+            testEmp.FirstName = "Иван";
+            testEmp.Position = "Петрович";
             testEmp.Salary = 50000;
             testEmp.Experience = 1;
 
@@ -37,9 +36,9 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11.Test
 
             
             Employee firstEmp = result[0];
-            Assert.AreEqual("Тестов", firstEmp.LastName);
-            Assert.AreEqual("Тест", firstEmp.FirstName);
-            Assert.AreEqual("Тестер", firstEmp.Position);
+            Assert.AreEqual("Иванов", firstEmp.LastName);
+            Assert.AreEqual("Иван", firstEmp.FirstName);
+            Assert.AreEqual("Петрович", firstEmp.Position);
             Assert.AreEqual(50000, firstEmp.Salary);
             Assert.AreEqual(1, firstEmp.Experience);
         }
@@ -73,16 +72,16 @@ namespace Tyuiu.PautovaMO.Sprint7.Project.V11.Test
             var stats = ds.GetStatistics(list);
 
             
-            Assert.AreEqual(3, stats.count); // 3 сотрудника
+            Assert.AreEqual(3, stats.count); // трое
             Assert.AreEqual(200, stats.avgSalary); // (100+200+300)/3 = 200
-            Assert.AreEqual(100, stats.minSalary); // Мин 
-            Assert.AreEqual(300, stats.maxSalary); // Макс 
+            Assert.AreEqual(100, stats.minSalary); 
+            Assert.AreEqual(300, stats.maxSalary); 
             Assert.AreEqual(600, stats.totalSalary); // (100+200+300)
         }
 
 
         [TestMethod]
-        public void TestSearch() 
+        public void TestSearch() //поиск
         {
             DataService ds = new DataService();
 

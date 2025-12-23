@@ -1,37 +1,34 @@
 ﻿namespace Tyuiu.PautovaMO.Sprint7.Project.V11.Lib
 {
   
-        // КЛАСС СОТРУДНИКА (карточка сотрудника)
         public class Employee
         {
-            // Основные данные
-            public string LastName { get; set; }    // Фамилия
-            public string FirstName { get; set; }   // Имя
-            public string Position { get; set; }    // Должность
-            public decimal Salary { get; set; }     // Зарплата
-            public int Experience { get; set; }     // Стаж (лет)
+            public string LastName { get; set; }    
+            public string FirstName { get; set; }   
+            public string Position { get; set; }    
+            public decimal Salary { get; set; }     
+            public int Experience { get; set; }      
 
-            // Для вывода в таблицу
             public override string ToString()
             {
-                return $"{LastName} {FirstName} - {Position} ({Salary} руб.)";
+                return $"{LastName} {FirstName} - {Position} ({Salary} руб.)"; // Для вывода в таблицу
             }
+
         }
 
-        // ГЛАВНЫЙ КЛАСС - вся логика здесь
+
         public class DataService
         {
             private List<Employee> employees = new List<Employee>();
 
-            // ==================== 1. РАБОТА С ФАЙЛАМИ ====================
 
-            // Чтение из CSV
+            // Чтение из файла
             public List<Employee> LoadFromCSV(string filePath)
             {
                 employees.Clear();
 
                 if (!File.Exists(filePath))
-                    return employees; // Если файла нет - пустой список
+                    return employees; 
 
                 string[] lines = File.ReadAllLines(filePath);
 
@@ -40,7 +37,7 @@
                 {
                     string[] parts = lines[i].Split(',');
 
-                    if (parts.Length >= 5) // Проверяем, что хватит данных
+                    if (parts.Length >= 5) // Проверяем что все есть
                     {
                         employees.Add(new Employee
                         {
@@ -56,25 +53,24 @@
                 return employees;
             }
 
-            // Сохранение в CSV
+
+            // Сохранение
             public void SaveToCSV(string filePath, List<Employee> employeesToSave)
             {
                 List<string> lines = new List<string>();
 
-                // Заголовок
+   
                 lines.Add("Фамилия,Имя,Должность,Зарплата,Стаж");
 
-                // Данные
                 foreach (Employee emp in employeesToSave)
                 {
                     lines.Add($"{emp.LastName},{emp.FirstName},{emp.Position},{emp.Salary},{emp.Experience}");
                 }
 
-                // Пишем в файл
-                File.WriteAllLines(filePath, lines);
+                File.WriteAllLines(filePath, lines); //сохраняем в файл
             }
 
-            // ==================== 2. СТАТИСТИКА ====================
+
 
             // Вся статистика сразу
             public (int count, decimal avgSalary, decimal minSalary, decimal maxSalary, decimal totalSalary)
@@ -87,8 +83,8 @@
                 decimal min = employeesList[0].Salary;
                 decimal max = employeesList[0].Salary;
 
-                foreach (Employee emp in employeesList)
-                {
+                foreach (Employee emp in employeesList) //для каждого сотр в списке
+            {
                     total += emp.Salary;
                     if (emp.Salary < min) min = emp.Salary;
                     if (emp.Salary > max) max = emp.Salary;
@@ -97,20 +93,7 @@
                 return (employeesList.Count, total / employeesList.Count, min, max, total);
             }
 
-            // Только количество
-            public int GetCount(List<Employee> employeesList)
-            {
-                return employeesList.Count;
-            }
-
-            // Только средняя зарплата
-            public decimal GetAverageSalary(List<Employee> employeesList)
-            {
-                if (employeesList.Count == 0) return 0;
-                return employeesList.Average(e => e.Salary);
-            }
-
-            // ==================== 3. ПОИСК ====================
+            
 
             // Общий поиск (по всем полям)
             public List<Employee> SearchAll(List<Employee> employeesList, string searchText)
@@ -119,8 +102,8 @@
 
                 foreach (Employee emp in employeesList)
                 {
-                    if (emp.LastName.ToLower().Contains(searchText.ToLower()) ||
-                        emp.FirstName.ToLower().Contains(searchText.ToLower()) ||
+                    if (emp.LastName.ToLower().Contains(searchText.ToLower()) || //сравниваем фамилию(без регистра) сотрудника с поиском
+                        emp.FirstName.ToLower().Contains(searchText.ToLower()) || 
                         emp.Position.ToLower().Contains(searchText.ToLower()))
                     {
                         result.Add(emp);
@@ -130,80 +113,37 @@
                 return result;
             }
 
-            // ==================== 4. СОРТИРОВКА ====================
 
             // Сортировка по фамилии А-Я
-            public List<Employee> SortByNameAsc(List<Employee> employeesList)
+            public List<Employee> SortByName(List<Employee> employeesList)
             {
                 return employeesList.OrderBy(e => e.LastName).ToList();
             }
 
-            // Сортировка по фамилии Я-А
-            public List<Employee> SortByNameDesc(List<Employee> employeesList)
-            {
-                return employeesList.OrderByDescending(e => e.LastName).ToList();
-            }
 
-            // Сортировка по зарплате (маленькая → большая)
-            public List<Employee> SortBySalaryAsc(List<Employee> employeesList)
-            {
-                return employeesList.OrderBy(e => e.Salary).ToList();
-            }
-
-            // Сортировка по зарплате (большая → маленькая)
-            public List<Employee> SortBySalaryDesc(List<Employee> employeesList)
+            //по зарплате (большая → маленькая)
+            public List<Employee> SortBySalary(List<Employee> employeesList)
             {
                 return employeesList.OrderByDescending(e => e.Salary).ToList();
             }
 
-            // Сортировка по стажу (мало → много)
-            public List<Employee> SortByExperienceAsc(List<Employee> employeesList)
-            {
-                return employeesList.OrderBy(e => e.Experience).ToList();
-            }
 
-            // Сортировка по стажу (много → мало)
-            public List<Employee> SortByExperienceDesc(List<Employee> employeesList)
+            // по стажу (много → мало)
+            public List<Employee> SortByExperience(List<Employee> employeesList)
             {
                 return employeesList.OrderByDescending(e => e.Experience).ToList();
             }
 
-        // ==================== 5. ФИЛЬТРАЦИЯ ====================
+      
 
-        public List<Employee> FilterBySearchText(List<Employee> employeesList, string searchText)
-        {
-            if (string.IsNullOrEmpty(searchText))
-                return employeesList; // Если пустой поиск - возвращаем всех
 
-            string searchLower = searchText.ToLower();
-
-            // Фильтрация по всем полям
-            List<Employee> result = new List<Employee>();
-
-            foreach (Employee emp in employeesList)
-            {
-                if (emp.LastName.ToLower().Contains(searchLower) ||
-                    emp.FirstName.ToLower().Contains(searchLower) ||
-                    emp.Position.ToLower().Contains(searchLower) ||
-                    emp.Salary.ToString().Contains(searchText) || // Без ToLower для чисел
-                    emp.Experience.ToString().Contains(searchText))
-                {
-                    result.Add(emp);
-                }
-            }
-
-            return result;
-        }
-
-        // ==================== 6. РАБОТА СО СПИСКОМ ====================
-
-            // Добавить сотрудника
+            // Добавить
             public void AddEmployee(Employee employee)
             {
                 employees.Add(employee);
             }
 
-            // Удалить сотрудника
+            // Удалить
             public bool RemoveEmployee(Employee employee)
             {
                 return employees.Remove(employee);
@@ -212,16 +152,14 @@
             
 
 
-            // ==================== 7. ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ====================
-
-            // Проверка файла
+            // доп Проверка файла
             public bool FileExists(string filePath)
             {
                 return File.Exists(filePath);
             }
 
             
-            // Проверка данных сотрудника
+            // доп Проверка данных сотрудника
             public bool ValidateEmployee(Employee employee)
             {
                 if (string.IsNullOrWhiteSpace(employee.LastName)) return false;
